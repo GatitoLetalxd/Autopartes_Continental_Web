@@ -62,11 +62,11 @@ const servicios = [
       </p>
     </div>
 
-    <!-- Services Grid: flex-wrap ensures centered rows even when incomplete -->
-    <div class="flex flex-wrap justify-center gap-6 lg:gap-8">
+    <!-- Services Grid: Horizontal scroll on mobile, flex-wrap on desktop -->
+    <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 sm:flex-wrap sm:justify-center sm:overflow-visible sm:snap-none hide-scrollbar">
       {servicios.map((s) => (
         <article
-          class="servicio-card group relative bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden cursor-default w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-22px)]"
+          class="servicio-card group relative bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden cursor-default flex-shrink-0 snap-center w-[85vw] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-22px)]"
           id={`servicio-${s.id}`}
         >
           <!-- Image -->
