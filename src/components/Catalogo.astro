@@ -1,0 +1,203 @@
+---
+// Catalogo.astro
+
+const productos = [
+  {
+    id: 1,
+    nombre: "Kit de Frenos Delanteros",
+    categoria: "frenos",
+    badge: "Frenos",
+    precio: "Consultar precio",
+    img: "/img/producto_1.jpg",
+    desc: "Pastillas y discos de freno de alta resistencia para todo tipo de vehículo.",
+  },
+  {
+    id: 2,
+    nombre: "Filtros de Motor y Aire",
+    categoria: "motor",
+    badge: "Motor",
+    precio: "Consultar precio",
+    img: "/img/producto_2.jpg",
+    desc: "Filtros originales y alternativos para motor, aceite y aire de todas las marcas.",
+  },
+  {
+    id: 3,
+    nombre: "Alternador y Arrancador",
+    categoria: "electrico",
+    badge: "Eléctrico",
+    precio: "Consultar precio",
+    img: "/img/producto_3.jpg",
+    desc: "Alternadores y motores de arranque remanufacturados con garantía.",
+  },
+  {
+    id: 4,
+    nombre: "Amortiguadores Delanteros",
+    categoria: "carroceria",
+    badge: "Carrocería",
+    precio: "Consultar precio",
+    img: "/img/autos.jpg",
+    desc: "Amortiguadores de precisión para suspensión delantera y trasera.",
+  },
+  {
+    id: 5,
+    nombre: "Bujías NGK y Denso",
+    categoria: "motor",
+    badge: "Motor",
+    precio: "Consultar precio",
+    img: "/img/producto_1.jpg",
+    desc: "Bujías de iridio y platino de las mejores marcas del mercado.",
+  },
+  {
+    id: 6,
+    nombre: "Sensores y Actuadores",
+    categoria: "electrico",
+    badge: "Eléctrico",
+    precio: "Consultar precio",
+    img: "/img/producto_3.jpg",
+    desc: "Sensores de oxígeno, temperatura, ABS y más para diagnóstico y reparación.",
+  },
+];
+
+const categorias = [
+  { key: "todos",    label: "Todos" },
+  { key: "motor",   label: "Motor" },
+  { key: "frenos",  label: "Frenos" },
+  { key: "electrico", label: "Eléctrico" },
+  { key: "carroceria", label: "Carrocería" },
+];
+---
+
+<section id="catalogo" class="py-20 lg:py-28 bg-[#161616]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header -->
+    <div class="flex flex-col items-center justify-center text-center mb-12 w-full">
+      <span class="inline-block text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">Repuestos de calidad</span>
+      <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-4">
+        Productos y <span class="text-[#F5C518]">Autopartes</span>
+      </h2>
+      <div class="w-20 h-1 bg-[#F5C518] rounded-full"></div>
+      <p class="mt-6 text-[#F5F5F5]/60 max-w-xl text-base sm:text-lg text-center">
+        Contamos con un amplio inventario de repuestos originales y alternativos para todos los modelos.
+      </p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div id="filtros" class="flex flex-wrap justify-center gap-3 mb-12" role="group" aria-label="Filtros de categoría">
+      {categorias.map((cat) => (
+        <button
+          class={`filter-btn px-5 py-2 rounded-full border text-sm font-semibold uppercase tracking-wide transition-all duration-200 ${cat.key === 'todos' ? 'active bg-[#F5C518] text-[#111111] border-[#F5C518]' : 'border-white/20 text-[#F5F5F5]/70 hover:border-[#F5C518] hover:text-[#F5C518]'}`}
+          data-filtro={cat.key}
+          aria-pressed={cat.key === 'todos' ? 'true' : 'false'}
+          id={`filtro-${cat.key}`}
+        >
+          {cat.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Products Grid -->
+    <div id="productos-grid" class="flex flex-wrap justify-center gap-6 lg:gap-8">
+      {productos.map((p) => (
+        <article
+          class="producto-card bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden group w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-22px)]"
+          data-categoria={p.categoria}
+          id={`producto-${p.id}`}
+        >
+          <!-- Image -->
+          <div class="relative h-52 overflow-hidden bg-[#222]">
+            <img
+              src={p.img}
+              alt={p.nombre}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <!-- Category Badge -->
+            <span class="absolute top-3 left-3 bg-[#F5C518] text-[#111111] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+              {p.badge}
+            </span>
+          </div>
+
+          <!-- Content -->
+          <div class="p-5">
+            <h3 class="font-['Barlow_Condensed'] font-bold text-xl text-white mb-1 uppercase tracking-wide">
+              {p.nombre}
+            </h3>
+            <p class="text-[#F5F5F5]/55 text-sm mb-4 leading-relaxed">{p.desc}</p>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-between gap-3">
+              <span class="text-[#F5C518] font-semibold text-sm">{p.precio}</span>
+              <a
+                href={`https://wa.me/51921123803?text=Hola, quiero consultar sobre ${encodeURIComponent(p.nombre)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 bg-[#F5C518] hover:bg-[#E8A000] text-[#111111] font-bold text-xs px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+                aria-label={`Consultar ${p.nombre} por WhatsApp`}
+              >
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                  <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.427a.5.5 0 00.617.617l5.569-1.476A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.793-.553-5.352-1.509l-.383-.228-3.966 1.05 1.05-3.874-.249-.396A9.962 9.962 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+                </svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+
+    <!-- CTA -->
+    <div class="text-center mt-14">
+      <p class="text-[#F5F5F5]/50 mb-4">¿No encuentras lo que buscas?</p>
+      <a href="https://wa.me/51921123803?text=Hola, necesito un repuesto específico"
+         target="_blank" rel="noopener noreferrer"
+         id="btn-consulta-repuesto"
+         class="inline-flex items-center gap-2 border-2 border-[#F5C518] text-[#F5C518] hover:bg-[#F5C518] hover:text-[#111111] font-bold px-8 py-3 rounded-xl transition-all duration-300 uppercase tracking-wide">
+        Consultar repuesto específico
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Product filter logic
+  const filtros = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.producto-card');
+
+  filtros.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filtro = btn.dataset.filtro;
+
+      // Update active button state
+      filtros.forEach(b => {
+        b.classList.remove('active', 'bg-[#F5C518]', 'text-[#111111]', 'border-[#F5C518]');
+        b.classList.add('border-white/20', 'text-[#F5F5F5]/70');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active', 'bg-[#F5C518]', 'text-[#111111]', 'border-[#F5C518]');
+      btn.classList.remove('border-white/20', 'text-[#F5F5F5]/70');
+      btn.setAttribute('aria-pressed', 'true');
+
+      // Show/hide cards with fade
+      cards.forEach(card => {
+        const cat = card.dataset.categoria;
+        const match = filtro === 'todos' || cat === filtro;
+
+        if (match) {
+          card.style.display = '';
+          // Fade in
+          requestAnimationFrame(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          });
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.92)';
+          setTimeout(() => { card.style.display = 'none'; }, 300);
+        }
+      });
+    });
+  });
+</script>

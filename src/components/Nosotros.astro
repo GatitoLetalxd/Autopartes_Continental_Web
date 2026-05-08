@@ -1,0 +1,99 @@
+---
+// Nosotros.astro
+
+const stats = [
+  { valor: "500", sufijo: "+", label: "Clientes Atendidos", id: "stat-clientes" },
+  { valor: "6",   sufijo: "",  label: "Tipos de Servicios", id: "stat-servicios" },
+  { valor: "10",  sufijo: "+", label: "Años de Experiencia", id: "stat-años" },
+];
+
+const puntos = [
+  { icono: "✓", texto: "Productos originales y de alta calidad" },
+  { icono: "✓", texto: "Técnicos certificados y con experiencia" },
+  { icono: "✓", texto: "Atención personalizada para cada cliente" },
+];
+---
+
+<section id="nosotros" class="py-20 lg:py-28 bg-[#111111] overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Stats Bar -->
+    <div class="grid grid-cols-3 gap-4 mb-20 bg-[#F5C518]/5 border border-[#F5C518]/15 rounded-2xl p-6 lg:p-10">
+      {stats.map((s) => (
+        <div class="text-center" id={s.id}>
+          <div
+            class="contador text-4xl sm:text-5xl lg:text-6xl font-['Barlow_Condensed'] font-bold text-[#F5C518] leading-none"
+            data-valor={s.valor}
+            data-sufijo={s.sufijo}
+          >
+            0{s.sufijo}
+          </div>
+          <p class="text-[#F5F5F5]/60 text-xs sm:text-sm mt-2 uppercase tracking-wider font-medium">{s.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Main Content: 2 columns -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- Left: Image with parallax -->
+      <div class="nosotros-img-wrap relative rounded-2xl overflow-hidden shadow-2xl shadow-black/50 h-80 sm:h-96 lg:h-[500px] order-2 lg:order-1">
+        <img
+          src="/img/foto_local.jpg"
+          alt="Local de Autopartes Continental en Puerto Maldonado"
+          class="nosotros-img w-full h-full object-cover"
+          loading="lazy"
+        />
+        <!-- Overlay with yellow accent -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-[#F5C518]/20 via-transparent to-transparent"></div>
+        <!-- Badge on image -->
+        <div class="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm border border-[#F5C518]/30 rounded-xl px-4 py-3">
+          <p class="text-[#F5C518] font-bold font-['Barlow_Condensed'] text-lg uppercase tracking-wide">Autopartes Continental</p>
+          <p class="text-white/60 text-xs mt-0.5">Puerto Maldonado, Perú</p>
+        </div>
+      </div>
+
+      <!-- Right: Text content -->
+      <div class="order-1 lg:order-2">
+        <span class="inline-block text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">Quiénes somos</span>
+        <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
+          Sobre <span class="text-[#F5C518]">Nosotros</span>
+        </h2>
+        <div class="w-16 h-1 bg-[#F5C518] rounded-full mb-8"></div>
+
+        <p class="text-[#F5F5F5]/70 text-base sm:text-lg leading-relaxed mb-6">
+          Somos <strong class="text-white">Autopartes Continental</strong>, una empresa especializada en la venta de autopartes y servicios automotrices en Puerto Maldonado.
+        </p>
+        <p class="text-[#F5F5F5]/70 text-base sm:text-lg leading-relaxed mb-8">
+          Ofrecemos productos de calidad y atención personalizada para todo tipo de vehículos, con más de una década de experiencia sirviendo a la región de Madre de Dios.
+        </p>
+
+        <!-- Key Points -->
+        <div class="space-y-4 mb-10">
+          {puntos.map((p, i) => (
+            <div class={`nosotros-punto flex items-center gap-4 bg-[#1a1a1a] border border-white/5 rounded-xl px-5 py-4`} id={`punto-${i}`}>
+              <div class="w-9 h-9 bg-[#F5C518] rounded-lg flex items-center justify-center text-[#111111] font-bold text-base flex-shrink-0">
+                {p.icono}
+              </div>
+              <span class="text-[#F5F5F5]/80 font-medium">{p.texto}</span>
+            </div>
+          ))}
+        </div>
+
+        <!-- CTA -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#contacto"
+             class="inline-flex items-center justify-center gap-2 bg-[#F5C518] hover:bg-[#E8A000] text-[#111111] font-bold px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105 uppercase tracking-wide text-sm">
+            Contáctanos
+          </a>
+          <a href="https://wa.me/51921123803"
+             target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center justify-center gap-2 border border-[#F5C518]/50 text-[#F5C518] hover:bg-[#F5C518]/10 font-bold px-6 py-3 rounded-xl transition-all duration-200 uppercase tracking-wide text-sm">
+            WhatsApp: 921 123 803
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

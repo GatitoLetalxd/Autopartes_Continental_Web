@@ -1,0 +1,64 @@
+---
+// index.astro
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Servicios from '../components/Servicios.astro';
+import Catalogo from '../components/Catalogo.astro';
+import Nosotros from '../components/Nosotros.astro';
+import Contacto from '../components/Contacto.astro';
+---
+
+<Layout>
+  <Hero />
+
+  <!-- Quick Data Bar -->
+  <div id="data-bar" class="bg-[#F5C518] py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#E8A000]">
+
+        <div class="dato-rapido flex items-center justify-center gap-3 py-2 sm:py-0">
+          <svg class="w-5 h-5 text-[#111111] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span class="text-[#111111] font-bold text-sm sm:text-base uppercase tracking-wide text-center leading-tight">
+            Av. Andrés Avelino Cáceres — Puerto Maldonado
+          </span>
+        </div>
+
+        <div class="dato-rapido flex items-center justify-center gap-3 py-2 sm:py-0 sm:px-4">
+          <svg class="w-5 h-5 text-[#111111] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          <span class="text-[#111111] font-bold text-sm sm:text-base uppercase tracking-wide">
+            921 123 803 / 925 724 735
+          </span>
+        </div>
+
+        <div class="dato-rapido flex items-center justify-center gap-3 py-2 sm:py-0 sm:px-4">
+          <svg class="w-5 h-5 text-[#111111] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-[#111111] font-bold text-sm sm:text-base uppercase tracking-wide">
+            Lun – Sáb: 8am – 6pm
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <Servicios />
+  <Catalogo />
+  <Nosotros />
+  <Contacto />
+</Layout>
+
+<script>
+  import { initAll } from '../scripts/animations.js';
+
+  // Init after DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    initAll();
+  });
+</script>
