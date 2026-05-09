@@ -156,13 +156,32 @@ export function animarContacto() {
   });
 }
 
-// 10. Init all
+// 10. Gallery cards
+export function animarGaleria() {
+  if (!document.querySelector(".galeria-item")) return;
+  gsap.from(".galeria-item", {
+    scrollTrigger: {
+      trigger: "#galeria",
+      start: "top 80%",
+    },
+    opacity: 0,
+    y: 50,
+    scale: 0.95,
+    duration: 0.7,
+    stagger: 0.15,
+    ease: "power2.out",
+    immediateRender: false,
+  });
+}
+
+// 11. Init all
 export function initAll() {
   animarHero();
   animarWhatsApp();
   animarServicios();
   animarDataBar();
   animarCatalogo();
+  animarGaleria();
   parallaxNosotros();
   contadorAnimado();
   animarContacto();
