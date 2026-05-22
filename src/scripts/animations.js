@@ -174,7 +174,42 @@ export function animarGaleria() {
   });
 }
 
-// 11. Init all
+// 11. Testimonials scroll reveal
+export function animarTestimonios() {
+  if (!document.querySelector(".testimonio-card")) return;
+  gsap.from(".testimonio-card", {
+    scrollTrigger: {
+      trigger: "#testimonios",
+      start: "top 80%",
+    },
+    opacity: 0,
+    y: 50,
+    scale: 0.95,
+    duration: 0.7,
+    stagger: 0.15,
+    ease: "power2.out",
+    immediateRender: false,
+  });
+}
+
+// 12. FAQ accordion items reveal
+export function animarFAQ() {
+  if (!document.querySelector(".faq-item")) return;
+  gsap.from(".faq-item", {
+    scrollTrigger: {
+      trigger: "#faq",
+      start: "top 80%",
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.6,
+    stagger: 0.12,
+    ease: "power2.out",
+    immediateRender: false,
+  });
+}
+
+// 13. Init all
 export function initAll() {
   animarHero();
   animarWhatsApp();
@@ -184,6 +219,8 @@ export function initAll() {
   animarGaleria();
   parallaxNosotros();
   contadorAnimado();
+  animarTestimonios();
+  animarFAQ();
   animarContacto();
   scrollReveal(".nosotros-punto", { y: 30, stagger: 0.2 });
 }

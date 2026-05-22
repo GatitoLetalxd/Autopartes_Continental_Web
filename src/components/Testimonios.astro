@@ -1,0 +1,230 @@
+---
+// Testimonios.astro
+
+const testimonios = [
+  {
+    id: 1,
+    nombre: "Juan Carlos R.",
+    rol: "Propietario de Toyota Hilux",
+    servicio: "Servicio Eléctrico",
+    rating: 5,
+    texto: "El servicio eléctrico de mi camioneta quedó impecable. Tenía un problema complejo con el alternador y lo diagnosticaron y solucionaron el mismo día. La atención en Puerto Maldonado es insuperable.",
+    avatar: "JR",
+  },
+  {
+    id: 2,
+    nombre: "María Fernanda S.",
+    rol: "Cliente Frecuente",
+    servicio: "Repuestos y Filtros",
+    rating: 5,
+    texto: "Excelente atención. Compré pastillas de frenos y filtros de aire para mi auto. Me asesoraron con mucha paciencia sobre la compatibilidad de marcas y los precios son súper competitivos.",
+    avatar: "MS",
+  },
+  {
+    id: 3,
+    nombre: "Carlos Delgado M.",
+    rol: "Conductor Local",
+    servicio: "Aire Acondicionado",
+    rating: 5,
+    texto: "Con el calor intenso que hace en Madre de Dios, el aire acondicionado es indispensable. La instalación quedó perfecta y enfría rapidísimo. El equipo técnico realmente sabe lo que hace.",
+    avatar: "CD",
+  },
+  {
+    id: 4,
+    nombre: "Pedro Mendoza V.",
+    rol: "Propietario de Hyundai Accent",
+    servicio: "Equipamiento y Parabrisas",
+    rating: 5,
+    texto: "Muy agradecido con el cambio de mi parabrisas y el polarizado de lunas. Tienen un stock muy completo y la instalación fue rápida y prolija. Se convirtieron en mi taller de confianza.",
+    avatar: "PM",
+  },
+];
+---
+
+<section id="testimonios" class="py-20 lg:py-28 bg-[#161616] relative overflow-hidden">
+  <!-- Glowing background details -->
+  <div class="absolute -top-40 -left-40 w-96 h-96 bg-[#F5C518]/5 rounded-full blur-[100px] pointer-events-none"></div>
+  <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-[#F5C518]/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <!-- Header -->
+    <div class="flex flex-col items-center justify-center text-center mb-16 w-full">
+      <span class="inline-block text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">Opiniones Reales</span>
+      <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-4">
+        Lo Que Dicen <span class="text-[#F5C518]">Nuestros Clientes</span>
+      </h2>
+      <div class="w-20 h-1 bg-[#F5C518] rounded-full"></div>
+      <p class="mt-6 text-[#F5F5F5]/60 max-w-xl text-base sm:text-lg text-center">
+        La confianza y seguridad de nuestros conductores en Madre de Dios es nuestra mayor recompensa.
+      </p>
+    </div>
+
+    <!-- Carousel Container -->
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-8">
+      
+      <!-- Testimonials track -->
+      <div class="overflow-hidden">
+        <div id="testimonios-track" class="flex transition-transform duration-500 ease-out gap-6" style="transform: translateX(0px);">
+          {testimonios.map((t) => (
+            <div 
+              class="testimonio-card w-full sm:w-[calc(50%-12px)] flex-shrink-0 bg-[#1a1a1a] border border-white/5 p-6 sm:p-8 rounded-2xl relative flex flex-col justify-between"
+              id={`testimonio-${t.id}`}
+            >
+              <!-- Decorative quote icon -->
+              <span class="absolute top-6 right-6 text-7xl font-serif text-white/5 leading-none select-none">“</span>
+              
+              <div>
+                <!-- Stars -->
+                <div class="flex gap-1 mb-5" aria-label={`Calificación de ${t.rating} estrellas`}>
+                  {Array.from({ length: t.rating }).map(() => (
+                    <svg class="w-5 h-5 text-[#F5C518] fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+
+                <!-- Text -->
+                <p class="text-[#F5F5F5]/80 text-sm sm:text-base italic leading-relaxed mb-6 font-light">
+                  "{t.texto}"
+                </p>
+              </div>
+
+              <!-- Author details -->
+              <div class="flex items-center gap-4 mt-4 pt-4 border-t border-white/5">
+                <div class="w-12 h-12 bg-gradient-to-br from-[#F5C518] to-[#E8A000] rounded-full flex items-center justify-center text-[#111111] font-bold text-base shadow-md shadow-[#F5C518]/10 select-none">
+                  {t.avatar}
+                </div>
+                <div>
+                  <h3 class="font-bold text-white text-base tracking-wide uppercase font-['Barlow_Condensed']">{t.nombre}</h3>
+                  <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-[#F5F5F5]/50 mt-0.5">
+                    <span>{t.rol}</span>
+                    <span class="text-[#F5C518]/50">•</span>
+                    <span class="text-[#F5C518] font-semibold">{t.servicio}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <button 
+        id="prev-testimonio-btn"
+        class="absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-[#1a1a1a] hover:bg-[#F5C518] border border-white/10 hover:border-[#F5C518] rounded-full flex items-center justify-center text-white hover:text-[#111111] shadow-xl transition-all duration-300 hover:scale-110 z-20"
+        aria-label="Opinión anterior"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button 
+        id="next-testimonio-btn"
+        class="absolute -right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-[#1a1a1a] hover:bg-[#F5C518] border border-white/10 hover:border-[#F5C518] rounded-full flex items-center justify-center text-white hover:text-[#111111] shadow-xl transition-all duration-300 hover:scale-110 z-20"
+        aria-label="Siguiente opinión"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      <!-- Carousel indicators (dots) -->
+      <div id="testimonios-dots" class="flex justify-center gap-2 mt-8"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let indexActual = 0;
+  const track = document.getElementById('testimonios-track');
+  const cards = document.querySelectorAll('.testimonio-card');
+  const prevBtn = document.getElementById('prev-testimonio-btn');
+  const nextBtn = document.getElementById('next-testimonio-btn');
+  const dotsContainer = document.getElementById('testimonios-dots');
+
+  if (track && cards.length > 0 && prevBtn && nextBtn && dotsContainer) {
+    let cartasVisibles = 2; // Por defecto en pantallas grandes
+    
+    function actualizarDimensiones() {
+      if (window.innerWidth < 640) {
+        cartasVisibles = 1;
+      } else {
+        cartasVisibles = 2;
+      }
+      crearPuntos();
+      irAlIndice(indexActual);
+    }
+
+    function crearPuntos() {
+      dotsContainer.innerHTML = '';
+      const totalPuntos = cards.length - cartasVisibles + 1;
+      for (let i = 0; i < totalPuntos; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === indexActual ? 'bg-[#F5C518] w-6' : 'bg-white/20'}`;
+        dot.setAttribute('aria-label', `Ir al grupo de opiniones ${i + 1}`);
+        dot.addEventListener('click', () => irAlIndice(i));
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function irAlIndice(nuevoIndice) {
+      const totalPuntos = cards.length - cartasVisibles + 1;
+      if (nuevoIndice < 0) {
+        indexActual = totalPuntos - 1;
+      } else if (nuevoIndice >= totalPuntos) {
+        indexActual = 0;
+      } else {
+        indexActual = nuevoIndice;
+      }
+
+      // Calcular el ancho de la tarjeta + gap
+      const gap = 24; // 6 * 4 (Tailwind gap-6)
+      const firstCard = cards[0] as HTMLElement;
+      if (firstCard && track) {
+        const anchoTarjeta = firstCard.getBoundingClientRect().width;
+        const desplazamiento = indexActual * (anchoTarjeta + gap);
+        track.style.transform = `translateX(-${desplazamiento}px)`;
+      }
+
+      // Actualizar dots
+      const dots = dotsContainer.children;
+      Array.from(dots).forEach((dotElement, i) => {
+        const dot = dotElement as HTMLElement;
+        if (i === indexActual) {
+          dot.classList.add('bg-[#F5C518]', 'w-6');
+          dot.classList.remove('bg-white/20');
+        } else {
+          dot.classList.remove('bg-[#F5C518]', 'w-6');
+          dot.classList.add('bg-white/20');
+        }
+      });
+    }
+
+    prevBtn.addEventListener('click', () => irAlIndice(indexActual - 1));
+    nextBtn.addEventListener('click', () => irAlIndice(indexActual + 1));
+
+    // Mobile touch events for swipe
+    let startX = 0;
+    let endX = 0;
+
+    track.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      const diferencia = startX - endX;
+      if (diferencia > 50) {
+        irAlIndice(indexActual + 1); // Swipe left -> Next
+      } else if (diferencia < -50) {
+        irAlIndice(indexActual - 1); // Swipe right -> Prev
+      }
+    }, { passive: true });
+
+    // Inicializar y responder a cambios de pantalla
+    window.addEventListener('resize', actualizarDimensiones);
+    actualizarDimensiones();
+  }
+</script>

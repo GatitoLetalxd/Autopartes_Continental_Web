@@ -1,0 +1,166 @@
+---
+// FAQ.astro
+
+const faqs = [
+  {
+    id: 1,
+    pregunta: "¿Cuentan con repuestos originales para todas las marcas?",
+    respuesta: "Sí, contamos con un amplio stock de repuestos originales y también alternativos de alta calidad homologados. Trabajamos con marcas líderes para sistemas de suspensión, frenos, motor y sistema eléctrico de vehículos japoneses, coreanos y americanos.",
+  },
+  {
+    id: 2,
+    pregunta: "¿Ofrecen garantía por sus servicios de reparación y mantenimiento?",
+    respuesta: "Por supuesto. Todos nuestros servicios de instalación de aire acondicionado, reparaciones del sistema eléctrico y equipamientos de vehículos cuentan con garantía respaldada por escrito. La duración varía según el servicio, asegurando tu total tranquilidad al salir del taller.",
+  },
+  {
+    id: 3,
+    pregunta: "¿Cuánto tiempo toma el mantenimiento de aire acondicionado?",
+    respuesta: "Un mantenimiento preventivo estándar y recarga de refrigerante ecológico toma aproximadamente entre 1 y 2 horas. Si el sistema requiere diagnóstico de fugas profundas o reemplazo de componentes (como el compresor o evaporador), coordinamos contigo los tiempos exactos de reparación.",
+  },
+  {
+    id: 4,
+    pregunta: "¿Hacen envíos de repuestos dentro de la región de Madre de Dios?",
+    respuesta: "Sí, realizamos envíos rápidos a diferentes provincias y distritos de Madre de Dios (como Iberia, Huepetuhe, Mazuko, etc.). Puedes cotizar tu repuesto por WhatsApp y coordinamos el despacho inmediato en la agencia de tu preferencia.",
+  },
+  {
+    id: 5,
+    pregunta: "¿Cuáles son sus métodos de pago aceptados?",
+    respuesta: "Aceptamos efectivo, transferencias bancarias directas (BCP, BBVA, Interbank) y pagos a través de aplicativos móviles y billeteras digitales (Yape, Plin), facilitándote un proceso de compra seguro y ágil.",
+  },
+];
+---
+
+<section id="faq" class="py-20 lg:py-28 bg-[#111111] relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+    <!-- Header -->
+    <div class="flex flex-col items-center justify-center text-center mb-16 w-full">
+      <span class="inline-block text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">Despeja tus dudas</span>
+      <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-4">
+        Preguntas <span class="text-[#F5C518]">Frecuentes</span>
+      </h2>
+      <div class="w-20 h-1 bg-[#F5C518] rounded-full"></div>
+      <p class="mt-6 text-[#F5F5F5]/60 max-w-xl text-base sm:text-lg text-center">
+        Resolvemos las consultas recurrentes de nuestros clientes sobre repuestos y taller.
+      </p>
+    </div>
+
+    <!-- Accordion Wrapper -->
+    <div class="space-y-4">
+      {faqs.map((faq) => (
+        <div 
+          class="faq-item bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#F5C518]/25"
+          id={`faq-item-${faq.id}`}
+        >
+          <!-- Trigger button -->
+          <button
+            type="button"
+            class="faq-trigger w-full flex items-center justify-between gap-4 p-6 text-left font-['Barlow_Condensed'] font-semibold text-lg sm:text-xl text-white hover:text-[#F5C518] transition-colors focus:outline-none"
+            aria-expanded="false"
+            aria-controls={`faq-content-${faq.id}`}
+            id={`faq-btn-${faq.id}`}
+          >
+            <span class="uppercase tracking-wide">{faq.pregunta}</span>
+            <span class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/50 border border-white/5 flex-shrink-0 transition-transform duration-300 faq-icon-box">
+              <svg class="w-4 h-4 transition-transform duration-300 faq-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </button>
+
+          <!-- Collapsible content -->
+          <div
+            id={`faq-content-${faq.id}`}
+            class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"
+            role="region"
+            aria-labelledby={`faq-btn-${faq.id}`}
+          >
+            <div class="px-6 pb-6 text-[#F5F5F5]/70 text-sm sm:text-base leading-relaxed border-t border-white/5 pt-4">
+              {faq.respuesta}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Extra assistance CTA -->
+    <div class="text-center mt-12 bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-left">
+        <h3 class="font-bold text-white text-lg uppercase font-['Barlow_Condensed'] tracking-wide">¿Aún tienes alguna otra pregunta?</h3>
+        <p class="text-[#F5F5F5]/60 text-sm mt-1">Escríbenos directamente por WhatsApp y uno de nuestros asesores te atenderá de inmediato.</p>
+      </div>
+      <a 
+        href="https://wa.me/51921123803?text=Hola,%20tengo%20una%20consulta"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-shine w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#F5C518] hover:bg-[#E8A000] text-[#111111] font-bold px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105 uppercase tracking-wide text-sm flex-shrink-0"
+      >
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.427a.5.5 0 00.617.617l5.569-1.476A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.793-.553-5.352-1.509l-.383-.228-3.966 1.05 1.05-3.874-.249-.396A9.962 9.962 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+        Hacer una consulta
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const triggers = document.querySelectorAll('.faq-trigger');
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+      const contentId = trigger.getAttribute('aria-controls');
+      const content = document.getElementById(contentId!);
+      const arrow = trigger.querySelector('.faq-arrow');
+      const iconBox = trigger.querySelector('.faq-icon-box');
+      const parent = trigger.closest('.faq-item');
+
+      // Close all other open items
+      document.querySelectorAll('.faq-trigger').forEach(otherTrigger => {
+        if (otherTrigger !== trigger && otherTrigger.getAttribute('aria-expanded') === 'true') {
+          const otherContentId = otherTrigger.getAttribute('aria-controls');
+          const otherContent = document.getElementById(otherContentId!);
+          const otherArrow = otherTrigger.querySelector('.faq-arrow');
+          const otherIconBox = otherTrigger.querySelector('.faq-icon-box');
+          const otherParent = otherTrigger.closest('.faq-item');
+
+          otherTrigger.setAttribute('aria-expanded', 'false');
+          if (otherContent) otherContent.style.maxHeight = '0';
+          if (otherArrow) otherArrow.classList.remove('rotate-180');
+          if (otherIconBox) {
+            otherIconBox.classList.remove('bg-[#F5C518]', 'text-[#111111]', 'border-[#F5C518]');
+            otherIconBox.classList.add('bg-white/5', 'text-white/50', 'border-white/5');
+          }
+          if (otherParent) otherParent.classList.remove('border-[#F5C518]/25');
+        }
+      });
+
+      // Toggle current item
+      if (isExpanded) {
+        trigger.setAttribute('aria-expanded', 'false');
+        if (content) content.style.maxHeight = '0';
+        if (arrow) arrow.classList.remove('rotate-180');
+        if (iconBox) {
+          iconBox.classList.remove('bg-[#F5C518]', 'text-[#111111]', 'border-[#F5C518]');
+          iconBox.classList.add('bg-white/5', 'text-white/50', 'border-white/5');
+        }
+        if (parent) parent.classList.remove('border-[#F5C518]/25');
+      } else {
+        trigger.setAttribute('aria-expanded', 'true');
+        if (content) {
+          // Set max-height to the scrollHeight to transition perfectly to full height
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+        if (arrow) arrow.classList.add('rotate-180');
+        if (iconBox) {
+          iconBox.classList.add('bg-[#F5C518]', 'text-[#111111]', 'border-[#F5C518]');
+          iconBox.classList.remove('bg-white/5', 'text-white/50', 'border-white/5');
+        }
+        if (parent) parent.classList.add('border-[#F5C518]/25');
+      }
+    });
+  });
+</script>
