@@ -48,6 +48,57 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Local Business Schema Markup (JSON-LD) -->
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "AutoRepair",
+        "name": "Autopartes Continental",
+        "image": "https://autopartes-continental.vercel.app/img/foto_local.jpg",
+        "@id": "https://autopartes-continental.vercel.app/#organization",
+        "url": "https://autopartes-continental.vercel.app",
+        "telephone": "+51921123803",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Andrés Avelino Cáceres",
+          "addressLocality": "Puerto Maldonado",
+          "addressRegion": "Madre de Dios",
+          "addressCountry": "PE"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -12.5925,
+          "longitude": -69.1932
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ],
+            "opens": "08:00",
+            "closes": "18:00"
+          }
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+51921123803",
+          "contactType": "customer service",
+          "areaServed": "PE",
+          "availableLanguage": "Spanish"
+        },
+        "sameAs": [
+          "https://wa.me/51921123803"
+        ]
+      }
+    </script>
   </head>
   <body class="bg-[#111111] text-[#F5F5F5] font-[Inter,sans-serif] overflow-x-hidden">
     <Navbar />
