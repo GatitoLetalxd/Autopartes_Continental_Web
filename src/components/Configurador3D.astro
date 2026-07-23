@@ -1,0 +1,332 @@
+---
+// Configurador3D.astro — Visualizador 3D estético flotante con fondo transparente
+---
+
+<section id="configurador-3d" class="py-16 lg:py-24 bg-[#0a0a0c] relative overflow-hidden border-t border-[rgba(245,197,24,0.15)]">
+  <!-- Radial ambient glow -->
+  <div class="ambient-blob absolute w-[600px] h-[600px] bg-[rgba(245,197,24,0.04)] -top-40 -right-40 pointer-events-none" aria-hidden="true"></div>
+  <div class="ambient-blob ambient-blob-2 absolute w-[500px] h-[500px] bg-[rgba(245,197,24,0.03)] -bottom-40 -left-40 pointer-events-none" aria-hidden="true"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+    <!-- Header -->
+    <div class="section-header flex flex-col items-center justify-center text-center mb-6 w-full">
+      <div class="section-badge mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#F5C518] animate-pulse"></span>
+        Accesorios para Todo Tipo de Vehículo
+      </div>
+      <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-4">
+        Equipamos tu <span class="gradient-text">Vehículo al Máximo</span>
+      </h2>
+      <div class="section-divider"></div>
+      <p class="mt-5 text-[rgba(245,245,245,0.6)] max-w-2xl text-base sm:text-lg">
+        Pickups, sedanes y hatchbacks — tenemos los repuestos y accesorios que necesitas. Cotiza hoy.
+      </p>
+    </div>
+
+    <!-- 3D Viewport (Full Width, Transparent Background) -->
+    <div class="relative w-full h-[500px] sm:h-[600px] lg:h-[700px]">
+
+      <!-- Canvas Container (Transparent, no border) -->
+      <div id="canvas-container-3d" class="w-full h-full relative cursor-grab active:cursor-grabbing"></div>
+
+      <!-- Model Selector Overlay (Bottom Center) -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-[rgba(10,10,12,0.8)] border border-[rgba(255,255,255,0.1)] px-2 py-2 rounded-2xl backdrop-blur-xl">
+        <button type="button" data-modelo="pickup" class="btn-modelo active bg-[#F5C518] text-[#111111] font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 border border-[#F5C518] flex items-center gap-2 cursor-pointer shadow-md">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zM3 9l2-4h10l2 4M3 9v7a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18"/></svg>
+          Pickup 4x4
+        </button>
+        <button type="button" data-modelo="sedan" class="btn-modelo bg-[rgba(255,255,255,0.06)] text-[rgba(245,245,245,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.12)] font-semibold py-2.5 px-5 rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 border border-[rgba(255,255,255,0.08)] flex items-center gap-2 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Sedán
+        </button>
+        <button type="button" data-modelo="hatchback" class="btn-modelo bg-[rgba(255,255,255,0.06)] text-[rgba(245,245,245,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.12)] font-semibold py-2.5 px-5 rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 border border-[rgba(255,255,255,0.08)] flex items-center gap-2 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          Hatchback
+        </button>
+      </div>
+
+
+
+      <!-- 3D Loading Spinner -->
+      <div id="loader-3d" class="absolute inset-0 bg-[#0a0a0c] z-30 flex flex-col items-center justify-center gap-3 transition-opacity duration-500 pointer-events-none">
+        <div class="w-12 h-12 border-4 border-[rgba(245,197,24,0.2)] border-t-[#F5C518] rounded-full animate-spin"></div>
+        <p id="loader-text-3d" class="text-[#F5C518] font-bold font-['Barlow_Condensed'] text-lg uppercase tracking-wider">Cargando Modelo 3D...</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Three.js GLTF Engine Script -->
+<script>
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+  import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+
+  // State
+  let modeloActual = 'pickup';
+  let autoRotate = true;
+
+  // DOM Elements
+  const container = document.getElementById('canvas-container-3d');
+  const loaderEl = document.getElementById('loader-3d');
+  const loaderTextEl = document.getElementById('loader-text-3d');
+
+  if (container) {
+    // 1. Scene — Transparent background, no fog
+    const scene = new THREE.Scene();
+    // No scene.background → transparent canvas blends with page
+
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+    const initialCamPos = new THREE.Vector3(3.8, 1.8, 4.8);
+    const camTarget = new THREE.Vector3(0, 0.5, 0);
+
+    camera.position.copy(initialCamPos);
+    camera.lookAt(camTarget);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setClearColor(0x000000, 0); // Fully transparent
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.4;
+    container.appendChild(renderer.domElement);
+
+    // GLTF + Draco Loader
+    const gltfLoader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/gltf/');
+    dracoLoader.setDecoderConfig({ type: 'js' });
+    gltfLoader.setDRACOLoader(dracoLoader);
+
+    // 2. Lighting (Studio Car Lighting — brighter to compensate no floor)
+    const ambientLight = new THREE.AmbientLight('#ffffff', 2.2);
+    scene.add(ambientLight);
+
+    const mainLight = new THREE.DirectionalLight('#ffffff', 3.8);
+    mainLight.position.set(6, 10, 6);
+    mainLight.castShadow = false; // No shadows without floor
+    scene.add(mainLight);
+
+    const fillLight = new THREE.DirectionalLight('#F5C518', 1.0);
+    fillLight.position.set(-6, 5, -5);
+    scene.add(fillLight);
+
+    const backLight = new THREE.DirectionalLight('#ffffff', 2.0);
+    backLight.position.set(0, 6, -6);
+    scene.add(backLight);
+
+    // Rim light for contour definition against dark background
+    const rimLight = new THREE.DirectionalLight('#F5C518', 0.8);
+    rimLight.position.set(-4, 2, 4);
+    scene.add(rimLight);
+
+    // No floor, no grid — vehicle floats on the page background
+
+    // 3. Vehicle Group
+    const vehicleGroup = new THREE.Group();
+    scene.add(vehicleGroup);
+
+    // Load GLB model with original materials (no overrides)
+    function loadModel(name: string) {
+      while (vehicleGroup.children.length > 0) {
+        vehicleGroup.remove(vehicleGroup.children[0]);
+      }
+
+      if (loaderEl) {
+        loaderEl.style.display = 'flex';
+        loaderEl.style.opacity = '1';
+        if (loaderTextEl) loaderTextEl.textContent = `Cargando Modelo 3D (${name.toUpperCase()})...`;
+      }
+
+      const glbUrl = `/models/${name}.glb`;
+      gltfLoader.load(
+        glbUrl,
+        (gltf) => {
+          const modelScene = gltf.scene;
+
+          // Auto-center and auto-scale — BIGGER vehicle
+          const box = new THREE.Box3().setFromObject(modelScene);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3());
+
+          modelScene.position.x -= center.x;
+          modelScene.position.y -= center.y;
+          modelScene.position.z -= center.z;
+
+          // Pickup sits a bit higher for better framing
+          if (name === 'pickup') {
+            modelScene.position.y += 0.3;
+          }
+
+          const maxDim = Math.max(size.x, size.y, size.z);
+          if (maxDim > 0) {
+            const scale = 4.5 / maxDim; // Larger scale for bigger appearance
+            modelScene.scale.set(scale, scale, scale);
+          }
+
+          // Enable rendering on all meshes, keep original materials
+          modelScene.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+              const mesh = child as THREE.Mesh;
+              mesh.castShadow = false;
+              mesh.receiveShadow = false;
+            }
+          });
+
+          vehicleGroup.add(modelScene);
+
+          if (loaderEl) {
+            loaderEl.style.opacity = '0';
+            setTimeout(() => { loaderEl.style.display = 'none'; }, 400);
+          }
+        },
+        (xhr) => {
+          if (xhr.lengthComputable && loaderTextEl) {
+            const percent = Math.round((xhr.loaded / xhr.total) * 100);
+            loaderTextEl.textContent = `Cargando ${name.toUpperCase()} (${percent}%)...`;
+          }
+        },
+        (err) => {
+          console.error(`Error de carga 3D para ${name}:`, err);
+          if (loaderEl) {
+            loaderEl.style.opacity = '0';
+            setTimeout(() => { loaderEl.style.display = 'none'; }, 400);
+          }
+        }
+      );
+    }
+
+    // Initial load
+    loadModel('pickup');
+
+
+    // Mouse / Touch Orbit Interaction
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    });
+
+    container.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - previousMousePosition.x;
+      const deltaY = e.clientY - previousMousePosition.y;
+
+      vehicleGroup.rotation.y += deltaX * 0.01;
+      camera.position.y = Math.max(0.5, Math.min(4.0, camera.position.y - deltaY * 0.008));
+      camera.lookAt(camTarget);
+
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Touch support
+    container.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      const deltaX = e.touches[0].clientX - previousMousePosition.x;
+      const deltaY = e.touches[0].clientY - previousMousePosition.y;
+
+      vehicleGroup.rotation.y += deltaX * 0.01;
+      camera.position.y = Math.max(0.5, Math.min(4.0, camera.position.y - deltaY * 0.008));
+      camera.lookAt(camTarget);
+
+      previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => { isDragging = false; });
+
+    // Scroll zoom removed — fixed vehicle size
+
+    // Animation Loop
+    function animate() {
+      requestAnimationFrame(animate);
+      if (autoRotate && !isDragging) {
+        vehicleGroup.rotation.y += 0.005;
+      }
+      camera.lookAt(camTarget);
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize Handler
+    window.addEventListener('resize', () => {
+      if (!container) return;
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    // ── UI EVENT LISTENERS ──
+
+    // Model Selector Buttons
+    document.querySelectorAll('.btn-modelo').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const modelo = target.dataset.modelo;
+        if (!modelo) return;
+
+        document.querySelectorAll('.btn-modelo').forEach(b => {
+          b.classList.remove('bg-[#F5C518]', 'text-[#111111]', 'active', 'shadow-md');
+          b.classList.add('bg-[rgba(255,255,255,0.06)]', 'text-[rgba(245,245,245,0.7)]');
+        });
+
+        target.classList.add('bg-[#F5C518]', 'text-[#111111]', 'active', 'shadow-md');
+        target.classList.remove('bg-[rgba(255,255,255,0.06)]', 'text-[rgba(245,245,245,0.7)]');
+
+        modeloActual = modelo;
+
+        loadModel(modelo);
+        resetAutoCycle(); // Reset timer on manual selection
+      });
+    });
+
+
+
+    // ── AUTO-CYCLE MODELS EVERY 15 SECONDS ──
+    const modelOrder = ['pickup', 'sedan', 'hatchback'];
+    let autoCycleTimer: ReturnType<typeof setInterval> | null = null;
+
+    function cycleToNextModel() {
+      const currentIndex = modelOrder.indexOf(modeloActual);
+      const nextIndex = (currentIndex + 1) % modelOrder.length;
+      const nextModel = modelOrder[nextIndex];
+
+      modeloActual = nextModel;
+      loadModel(nextModel);
+
+      // Sync UI buttons
+      document.querySelectorAll('.btn-modelo').forEach(b => {
+        b.classList.remove('bg-[#F5C518]', 'text-[#111111]', 'active', 'shadow-md');
+        b.classList.add('bg-[rgba(255,255,255,0.06)]', 'text-[rgba(245,245,245,0.7)]');
+      });
+      const activeBtn = document.querySelector(`[data-modelo="${nextModel}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-[#F5C518]', 'text-[#111111]', 'active', 'shadow-md');
+        activeBtn.classList.remove('bg-[rgba(255,255,255,0.06)]', 'text-[rgba(245,245,245,0.7)]');
+      }
+    }
+
+    function resetAutoCycle() {
+      if (autoCycleTimer) clearInterval(autoCycleTimer);
+      autoCycleTimer = setInterval(cycleToNextModel, 15000);
+    }
+
+    // Start auto-cycle
+    resetAutoCycle();
+  }
+</script>

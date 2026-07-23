@@ -31,51 +31,57 @@ const faqs = [
 ---
 
 <section id="faq" class="py-20 lg:py-28 bg-[#111111] relative overflow-hidden">
+  <!-- Subtle radial glow -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(245,197,24,0.03)_0%,transparent_65%)] pointer-events-none"></div>
+
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
     <!-- Header -->
-    <div class="flex flex-col items-center justify-center text-center mb-16 w-full">
-      <span class="inline-block text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">Despeja tus dudas</span>
-      <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-4">
-        Preguntas <span class="text-[#F5C518]">Frecuentes</span>
+    <div class="section-header flex flex-col items-center justify-center text-center mb-16 w-full">
+      <div class="section-badge mb-5">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#F5C518]"></span>
+        Despeja tus dudas
+      </div>
+      <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-5">
+        Preguntas <span class="gradient-text">Frecuentes</span>
       </h2>
-      <div class="w-20 h-1 bg-[#F5C518] rounded-full"></div>
-      <p class="mt-6 text-[#F5F5F5]/60 max-w-xl text-base sm:text-lg text-center">
+      <div class="section-divider"></div>
+      <p class="mt-6 text-[rgba(245,245,245,0.55)] max-w-xl text-base sm:text-lg">
         Resolvemos las consultas recurrentes de nuestros clientes sobre repuestos y taller.
       </p>
     </div>
 
-    <!-- Accordion Wrapper -->
-    <div class="space-y-4">
+    <!-- Accordion -->
+    <div class="space-y-3">
       {faqs.map((faq) => (
-        <div 
-          class="faq-item bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#F5C518]/25"
+        <div
+          class="faq-item bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.07)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[rgba(245,197,24,0.2)]"
           id={`faq-item-${faq.id}`}
         >
           <!-- Trigger button -->
           <button
             type="button"
-            class="faq-trigger w-full flex items-center justify-between gap-4 p-6 text-left font-['Barlow_Condensed'] font-semibold text-lg sm:text-xl text-white hover:text-[#F5C518] transition-colors focus:outline-none"
+            class="faq-trigger w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left font-['Barlow_Condensed'] font-semibold text-lg sm:text-xl text-white hover:text-[#F5C518] transition-colors duration-200 focus:outline-none cursor-pointer"
             aria-expanded="false"
             aria-controls={`faq-content-${faq.id}`}
             id={`faq-btn-${faq.id}`}
           >
-            <span class="uppercase tracking-wide">{faq.pregunta}</span>
-            <span class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/50 border border-white/5 flex-shrink-0 transition-transform duration-300 faq-icon-box">
-              <svg class="w-4 h-4 transition-transform duration-300 faq-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span class="uppercase tracking-wide leading-tight">{faq.pregunta}</span>
+            <span class="w-8 h-8 rounded-lg bg-[rgba(255,255,255,0.05)] flex items-center justify-center text-[rgba(255,255,255,0.4)] border border-[rgba(255,255,255,0.07)] flex-shrink-0 transition-all duration-300 faq-icon-box">
+              <svg class="w-4 h-4 transition-transform duration-300 faq-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
               </svg>
             </span>
           </button>
 
-          <!-- Collapsible content -->
+          <!-- Content -->
           <div
             id={`faq-content-${faq.id}`}
-            class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"
+            class="faq-content max-h-0 overflow-hidden transition-all duration-350 ease-in-out"
             role="region"
             aria-labelledby={`faq-btn-${faq.id}`}
           >
-            <div class="px-6 pb-6 text-[#F5F5F5]/70 text-sm sm:text-base leading-relaxed border-t border-white/5 pt-4">
+            <div class="px-5 sm:px-6 pb-6 text-[rgba(245,245,245,0.65)] text-sm sm:text-base leading-relaxed border-t border-[rgba(255,255,255,0.06)] pt-4">
               {faq.respuesta}
             </div>
           </div>
@@ -84,25 +90,24 @@ const faqs = [
     </div>
 
     <!-- Extra assistance CTA -->
-    <div class="text-center mt-12 bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="mt-10 bg-[rgba(245,197,24,0.05)] border border-[rgba(245,197,24,0.18)] rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 backdrop-blur-sm">
       <div class="text-left">
-        <h3 class="font-bold text-white text-lg uppercase font-['Barlow_Condensed'] tracking-wide">¿Aún tienes alguna otra pregunta?</h3>
-        <p class="text-[#F5F5F5]/60 text-sm mt-1">Escríbenos directamente por WhatsApp y uno de nuestros asesores te atenderá de inmediato.</p>
+        <h3 class="font-bold text-white text-lg uppercase font-['Barlow_Condensed'] tracking-wide mb-1">¿Aún tienes alguna otra pregunta?</h3>
+        <p class="text-[rgba(245,245,245,0.55)] text-sm">Escríbenos directamente por WhatsApp y uno de nuestros asesores te atenderá de inmediato.</p>
       </div>
-      <a 
+      <a
         href="https://wa.me/51921123803?text=Hola,%20tengo%20una%20consulta"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-shine w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#F5C518] hover:bg-[#E8A000] text-[#111111] font-bold px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105 uppercase tracking-wide text-sm flex-shrink-0"
+        class="btn-shine w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#F5C518] hover:bg-[#E8A000] text-[#111111] font-bold px-7 py-3.5 rounded-xl transition-all duration-200 hover:scale-105 uppercase tracking-wide text-sm flex-shrink-0 cursor-pointer"
       >
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
           <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.427a.5.5 0 00.617.617l5.569-1.476A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.793-.553-5.352-1.509l-.383-.228-3.966 1.05 1.05-3.874-.249-.396A9.962 9.962 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
         </svg>
         Hacer una consulta
       </a>
     </div>
-
   </div>
 </section>
 
@@ -118,48 +123,45 @@ const faqs = [
       const iconBox = trigger.querySelector('.faq-icon-box');
       const parent = trigger.closest('.faq-item');
 
-      // Close all other open items
-      document.querySelectorAll('.faq-trigger').forEach(otherTrigger => {
-        if (otherTrigger !== trigger && otherTrigger.getAttribute('aria-expanded') === 'true') {
-          const otherContentId = otherTrigger.getAttribute('aria-controls');
-          const otherContent = document.getElementById(otherContentId!);
-          const otherArrow = otherTrigger.querySelector('.faq-arrow');
-          const otherIconBox = otherTrigger.querySelector('.faq-icon-box');
-          const otherParent = otherTrigger.closest('.faq-item');
+      // Close all others
+      document.querySelectorAll('.faq-trigger').forEach(other => {
+        if (other !== trigger && other.getAttribute('aria-expanded') === 'true') {
+          const otherId = other.getAttribute('aria-controls');
+          const otherContent = document.getElementById(otherId!);
+          const otherArrow = other.querySelector('.faq-arrow');
+          const otherIconBox = other.querySelector('.faq-icon-box');
+          const otherParent = other.closest('.faq-item');
 
-          otherTrigger.setAttribute('aria-expanded', 'false');
+          other.setAttribute('aria-expanded', 'false');
           if (otherContent) otherContent.style.maxHeight = '0';
           if (otherArrow) otherArrow.classList.remove('rotate-180');
           if (otherIconBox) {
             otherIconBox.classList.remove('bg-[#F5C518]', 'text-[#111111]', 'border-[#F5C518]');
-            otherIconBox.classList.add('bg-white/5', 'text-white/50', 'border-white/5');
+            otherIconBox.classList.add('bg-[rgba(255,255,255,0.05)]', 'text-[rgba(255,255,255,0.4)]', 'border-[rgba(255,255,255,0.07)]');
           }
-          if (otherParent) otherParent.classList.remove('border-[#F5C518]/25');
+          if (otherParent) otherParent.classList.remove('border-[rgba(245,197,24,0.2)]');
         }
       });
 
-      // Toggle current item
+      // Toggle current
       if (isExpanded) {
         trigger.setAttribute('aria-expanded', 'false');
         if (content) content.style.maxHeight = '0';
         if (arrow) arrow.classList.remove('rotate-180');
         if (iconBox) {
           iconBox.classList.remove('bg-[#F5C518]', 'text-[#111111]', 'border-[#F5C518]');
-          iconBox.classList.add('bg-white/5', 'text-white/50', 'border-white/5');
+          iconBox.classList.add('bg-[rgba(255,255,255,0.05)]', 'text-[rgba(255,255,255,0.4)]', 'border-[rgba(255,255,255,0.07)]');
         }
-        if (parent) parent.classList.remove('border-[#F5C518]/25');
+        if (parent) parent.classList.remove('border-[rgba(245,197,24,0.2)]');
       } else {
         trigger.setAttribute('aria-expanded', 'true');
-        if (content) {
-          // Set max-height to the scrollHeight to transition perfectly to full height
-          content.style.maxHeight = content.scrollHeight + 'px';
-        }
+        if (content) content.style.maxHeight = content.scrollHeight + 'px';
         if (arrow) arrow.classList.add('rotate-180');
         if (iconBox) {
           iconBox.classList.add('bg-[#F5C518]', 'text-[#111111]', 'border-[#F5C518]');
-          iconBox.classList.remove('bg-white/5', 'text-white/50', 'border-white/5');
+          iconBox.classList.remove('bg-[rgba(255,255,255,0.05)]', 'text-[rgba(255,255,255,0.4)]', 'border-[rgba(255,255,255,0.07)]');
         }
-        if (parent) parent.classList.add('border-[#F5C518]/25');
+        if (parent) parent.classList.add('border-[rgba(245,197,24,0.2)]');
       }
     });
   });

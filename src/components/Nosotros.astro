@@ -7,28 +7,43 @@ const stats = [
   { valor: "10",  sufijo: "+", label: "Años de Experiencia", id: "stat-años" },
 ];
 
+// UI/UX Pro Max: SVG icons instead of text emojis/symbols (priority 4)
 const puntos = [
-  { icono: "✓", texto: "Productos originales y de alta calidad" },
-  { icono: "✓", texto: "Técnicos certificados y con experiencia" },
-  { icono: "✓", texto: "Atención personalizada para cada cliente" },
+  {
+    texto: "Productos originales y de alta calidad",
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+  },
+  {
+    texto: "Técnicos certificados y con experiencia",
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>`,
+  },
+  {
+    texto: "Atención personalizada para cada cliente",
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
+  },
 ];
 ---
 
-<section id="nosotros" class="py-20 lg:py-28 bg-[#111111] overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="nosotros" class="py-20 lg:py-28 bg-[#111111] overflow-hidden relative">
+  <!-- Ambient glow -->
+  <div class="absolute top-0 right-0 w-[40vw] h-[40vw] bg-[rgba(245,197,24,0.03)] rounded-full blur-[120px] pointer-events-none"></div>
 
-    <!-- Stats Bar -->
-    <div class="grid grid-cols-3 gap-4 mb-20 bg-[#F5C518]/5 border border-[#F5C518]/15 rounded-2xl p-6 lg:p-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+    <!-- Stats Bar — enhanced glass -->
+    <div class="grid grid-cols-3 gap-0 mb-20 rounded-2xl overflow-hidden border border-[rgba(245,197,24,0.15)] bg-[rgba(245,197,24,0.04)] backdrop-blur-sm divide-x divide-[rgba(245,197,24,0.1)]">
       {stats.map((s) => (
-        <div class="text-center" id={s.id}>
+        <div class="text-center py-8 lg:py-10 relative group" id={s.id}>
+          <!-- Hover accent -->
+          <div class="absolute inset-0 bg-[rgba(245,197,24,0.04)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <div
-            class="contador text-4xl sm:text-5xl lg:text-6xl font-['Barlow_Condensed'] font-bold text-[#F5C518] leading-none"
+            class="contador text-4xl sm:text-5xl lg:text-6xl font-['Barlow_Condensed'] font-extrabold text-[#F5C518] leading-none mb-2"
             data-valor={s.valor}
             data-sufijo={s.sufijo}
           >
             0{s.sufijo}
           </div>
-          <p class="text-[#F5F5F5]/60 text-xs sm:text-sm mt-2 uppercase tracking-wider font-medium">{s.label}</p>
+          <p class="text-[rgba(245,245,245,0.5)] text-xs sm:text-sm uppercase tracking-wider font-medium">{s.label}</p>
         </div>
       ))}
     </div>
@@ -39,49 +54,55 @@ const puntos = [
       <!-- Left: Images Collage -->
       <div class="relative h-[400px] sm:h-[500px] lg:h-[600px] order-2 lg:order-1 flex items-center justify-center">
         <!-- Main Image -->
-        <div tabindex="0" class="nosotros-img-wrap absolute right-0 top-0 w-[75%] h-[75%] rounded-2xl overflow-hidden shadow-2xl shadow-black/50 z-10 transition-all duration-500 cursor-pointer hover:scale-110 hover:z-50 hover:shadow-[#F5C518]/20 focus:scale-110 focus:z-50 outline-none tap-highlight-transparent">
+        <div tabindex="0" class="nosotros-img-wrap absolute right-0 top-0 w-[75%] h-[75%] rounded-2xl overflow-hidden shadow-2xl shadow-black/60 z-10 transition-all duration-500 cursor-pointer hover:scale-[1.05] hover:z-50 hover:shadow-[rgba(245,197,24,0.15)] focus:scale-[1.05] focus:z-50 outline-none">
           <img src="/img/foto_local.jpg" alt="Local de Autopartes Continental" class="nosotros-img w-full h-full object-cover" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-tr from-[#F5C518]/20 via-transparent to-transparent pointer-events-none"></div>
+          <div class="absolute inset-0 bg-gradient-to-tr from-[rgba(245,197,24,0.15)] via-transparent to-transparent pointer-events-none"></div>
         </div>
         <!-- Worker 1 -->
-        <div tabindex="0" class="absolute left-0 bottom-4 w-[55%] h-[55%] rounded-2xl overflow-hidden shadow-2xl shadow-black/50 z-20 border-4 border-[#111111] transition-all duration-500 cursor-pointer hover:scale-[1.3] sm:hover:scale-[1.4] hover:z-50 hover:border-[#F5C518]/50 focus:scale-[1.3] sm:focus:scale-[1.4] focus:z-50 focus:border-[#F5C518]/50 outline-none tap-highlight-transparent">
+        <div tabindex="0" class="absolute left-0 bottom-4 w-[55%] h-[55%] rounded-2xl overflow-hidden shadow-2xl shadow-black/60 z-20 border-4 border-[#111111] transition-all duration-500 cursor-pointer hover:scale-[1.25] hover:z-50 hover:border-[rgba(245,197,24,0.4)] focus:scale-[1.25] focus:z-50 outline-none">
           <img src="/img/trabajador_estrella.jpeg" alt="Técnico Especializado" class="w-full h-full object-cover" loading="lazy" />
         </div>
         <!-- Worker 2 -->
-        <div tabindex="0" class="absolute left-[15%] top-8 w-[45%] h-[40%] rounded-2xl overflow-hidden shadow-2xl shadow-black/50 z-30 border-4 border-[#111111] transition-all duration-500 cursor-pointer hover:scale-[1.4] sm:hover:scale-[1.5] hover:z-50 hover:border-[#F5C518]/50 focus:scale-[1.4] sm:focus:scale-[1.5] focus:z-50 focus:border-[#F5C518]/50 outline-none tap-highlight-transparent">
+        <div tabindex="0" class="absolute left-[15%] top-8 w-[45%] h-[40%] rounded-2xl overflow-hidden shadow-2xl shadow-black/60 z-30 border-4 border-[#111111] transition-all duration-500 cursor-pointer hover:scale-[1.35] hover:z-50 hover:border-[rgba(245,197,24,0.4)] focus:scale-[1.35] focus:z-50 outline-none">
           <img src="/img/trabajador_estrella_2.jpeg" alt="Equipo Técnico" class="w-full h-full object-cover object-top" loading="lazy" />
         </div>
-        
-        <!-- Badge -->
-        <div class="absolute bottom-10 right-4 bg-black/90 backdrop-blur-md border border-[#F5C518]/30 rounded-xl px-5 py-3 z-40 shadow-xl pointer-events-none">
+
+        <!-- Floating Badge -->
+        <div class="absolute bottom-10 right-4 bg-[rgba(10,10,12,0.92)] backdrop-blur-lg border border-[rgba(245,197,24,0.25)] rounded-xl px-5 py-3 z-40 shadow-xl pointer-events-none">
           <p class="text-[#F5C518] font-bold font-['Barlow_Condensed'] text-lg uppercase tracking-wide">Equipo Experto</p>
-          <p class="text-white/70 text-xs mt-0.5">Técnicos certificados</p>
+          <p class="text-[rgba(255,255,255,0.6)] text-xs mt-0.5">Técnicos certificados</p>
         </div>
       </div>
 
       <!-- Right: Text content -->
       <div class="order-1 lg:order-2">
-        <span class="inline-block text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">Quiénes somos</span>
-        <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
-          Sobre <span class="text-[#F5C518]">Nosotros</span>
+        <div class="section-badge mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#F5C518]"></span>
+          Quiénes somos
+        </div>
+        <h2 class="section-titulo text-4xl sm:text-5xl lg:text-6xl text-white mb-5">
+          Sobre <span class="gradient-text">Nosotros</span>
         </h2>
-        <div class="w-16 h-1 bg-[#F5C518] rounded-full mb-8"></div>
+        <div class="section-divider mb-8"></div>
 
-        <p class="text-[#F5F5F5]/70 text-base sm:text-lg leading-relaxed mb-6">
-          Somos <strong class="text-white">Autopartes Continental</strong>, una empresa especializada en la venta de autopartes y servicios automotrices en Puerto Maldonado.
+        <p class="text-[rgba(245,245,245,0.65)] text-base sm:text-lg leading-relaxed mb-5">
+          Somos <strong class="text-white font-semibold">Autopartes Continental</strong>, una empresa especializada en la venta de autopartes y servicios automotrices en Puerto Maldonado.
         </p>
-        <p class="text-[#F5F5F5]/70 text-base sm:text-lg leading-relaxed mb-8">
+        <p class="text-[rgba(245,245,245,0.65)] text-base sm:text-lg leading-relaxed mb-8">
           Ofrecemos productos de calidad y atención personalizada para todo tipo de vehículos, con más de una década de experiencia sirviendo a la región de Madre de Dios.
         </p>
 
-        <!-- Key Points -->
-        <div class="space-y-4 mb-10">
+        <!-- Key Points — SVG icons (UI/UX Pro Max: no text-only symbols) -->
+        <div class="space-y-3 mb-10">
           {puntos.map((p, i) => (
-            <div class={`nosotros-punto flex items-center gap-4 bg-[#1a1a1a] border border-white/5 rounded-xl px-5 py-4`} id={`punto-${i}`}>
-              <div class="w-9 h-9 bg-[#F5C518] rounded-lg flex items-center justify-center text-[#111111] font-bold text-base flex-shrink-0">
-                {p.icono}
+            <div
+              class="nosotros-punto flex items-center gap-4 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(245,197,24,0.2)] hover:bg-[rgba(245,197,24,0.03)] rounded-xl px-5 py-4 transition-all duration-200"
+              id={`punto-${i}`}
+            >
+              <div class="w-9 h-9 bg-[#F5C518] rounded-lg flex items-center justify-center text-[#111111] flex-shrink-0 shadow-md shadow-[rgba(245,197,24,0.2)]">
+                <Fragment set:html={p.icon} />
               </div>
-              <span class="text-[#F5F5F5]/80 font-medium">{p.texto}</span>
+              <span class="text-[rgba(245,245,245,0.8)] font-medium text-sm sm:text-base">{p.texto}</span>
             </div>
           ))}
         </div>
@@ -89,12 +110,12 @@ const puntos = [
         <!-- CTA -->
         <div class="flex flex-col sm:flex-row gap-4">
           <a href="#contacto"
-             class="btn-shine inline-flex items-center justify-center gap-2 bg-[#F5C518] hover:bg-[#E8A000] text-[#111111] font-bold px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105 uppercase tracking-wide text-sm">
+             class="btn-shine inline-flex items-center justify-center gap-2 bg-[#F5C518] hover:bg-[#E8A000] text-[#111111] font-bold px-7 py-3.5 rounded-xl transition-all duration-200 hover:scale-105 hover:shadow-[0_0_25px_rgba(245,197,24,0.35)] uppercase tracking-wide text-sm cursor-pointer">
             Contáctanos
           </a>
           <a href="https://wa.me/51921123803"
              target="_blank" rel="noopener noreferrer"
-             class="btn-shine inline-flex items-center justify-center gap-2 border border-[#F5C518]/50 text-[#F5C518] hover:bg-[#F5C518]/10 font-bold px-6 py-3 rounded-xl transition-all duration-200 uppercase tracking-wide text-sm">
+             class="btn-shine inline-flex items-center justify-center gap-2 border border-[rgba(245,197,24,0.35)] text-[#F5C518] hover:bg-[rgba(245,197,24,0.08)] hover:border-[rgba(245,197,24,0.6)] font-bold px-7 py-3.5 rounded-xl transition-all duration-200 uppercase tracking-wide text-sm cursor-pointer backdrop-blur-sm">
             WhatsApp: 921 123 803
           </a>
         </div>
